@@ -1,0 +1,52 @@
+body {
+	background-color: #2b3a55;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-family: "Roboto Condensed", sans-serif;
+}
+
+.container-conversor {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid #f2e5e5;
+	border-radius: 5px;
+	color: #ffffff;
+	width: 400px;
+	height: 350px;
+	margin-bottom: 40px;
+}
+
+.container-conversor form {
+	text-align: center;
+	width: 400px;
+}
+.container-conversor form input {
+	text-align: center;
+	width: 55%;
+	height: 30px;
+	border: 0px;
+	border-radius: 5px;
+}
+
+.container-conversor form select {
+	text-align: center;
+	width: 55%;
+	height: 30px;
+	border: 0px;
+	border-radius: 5px;
+}
+.container-conversor form button {
+	padding: 10px 30px;
+	margin-top: 20px;
+	border: 0px;
+	border-radius: 5px;
+	background-color: white;
+}
+
+.graphic {
+	height: 80vh;
+	width: 90vw;
+}

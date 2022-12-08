@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="assets/css/normalize.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,800&family=Roboto+Condensed:wght@700&family=Secular+One&family=Silkscreen&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Conversor de monedas Nacional</h1>
+		<div class="container-conversor">
+			<h2>Pesos CLP</h2>
+			<form action="" id="conversor">
+				<input
+					type="number"
+					min="0"
+					placeholder="Ingrese el monto en CLP"
+					id="inputCoin"
+				/>
+				<p>Moneda a convertir</p>
+				<select name="typeCoin" id="coinSelector">
+					<option value="">Selecciona una moneda</option>
+					<option value="uf">UF</option>
+					<option value="dolar">Dolar</option>
+					<option value="euro">Euro</option>
+					<option value="utm">UTM</option>
+				</select>
+				<br />
+				<button>Verificar valor</button>
+			</form>
+			<p>Valor del intercambio<span id="result">...</span></p>
+		</div>
+		<div class="graphic">
+			<canvas id="myChart"></canvas>
+		</div>
+	</body>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="assets/js/main.js"></script>
+</html>
