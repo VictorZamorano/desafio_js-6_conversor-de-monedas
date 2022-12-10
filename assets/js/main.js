@@ -8,12 +8,6 @@ const euroindicador = "https://mindicador.cl/api/euro";
 const utmindicador = "https://mindicador.cl/api/utm";
 let myChart;
 
-async function getMindicador() {
-	const res = await fetch(mindicador);
-	const dataIndicador = await res.json();
-	return dataIndicador;
-}
-
 async function getCoinsValue() {
 	const res = await fetch(mindicador);
 	const datos = await res.json();
@@ -138,14 +132,15 @@ coinSelector.addEventListener("change", (e) => {
 			default:
 				alert("Error no existe el tipo de cambio seleccionado");
 		}
-		coinsData
-			.then(function (coinsData) {
-				renderGraphic(coinsData);
-			})
-			.catch(function (error) {
-				console.log("No pude obtener datos");
-			});
 	} catch (e) {
 		console.error(e.message);
 	}
+
+	coinsData
+		.then(function (coinsData) {
+			renderGraphic(coinsData);
+		})
+		.catch(function (error) {
+			console.log("No pude obtener datos");
+		});
 });
