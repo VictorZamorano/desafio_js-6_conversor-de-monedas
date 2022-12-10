@@ -20,12 +20,16 @@ async function getCoinsValue() {
 
 	let arrayCoins = [];
 
-	arrayCoins.push(datos.uf);
-	arrayCoins.push(datos.dolar);
-	arrayCoins.push(datos.euro);
-	arrayCoins.push(datos.utm);
+	try {
+		arrayCoins.push(datos.uf);
+		arrayCoins.push(datos.dolar);
+		arrayCoins.push(datos.euro);
+		arrayCoins.push(datos.utm);
 
-	return arrayCoins;
+		return arrayCoins;
+	} catch (e) {
+		console.error(e.message);
+	}
 }
 
 async function exchangeCoin() {
@@ -48,57 +52,68 @@ async function exchangeCoin() {
 			result.innerHTML = ": $" + exchangeResult.toFixed(2);
 		}
 	} catch (e) {
-		console.log(e.message);
+		console.error(e.message);
 	}
 }
 
 conversor.addEventListener("submit", (e) => {
 	e.preventDefault();
 	exchangeCoin();
-	selectedApi();
 });
 
 async function getCoinsData(api) {
-	const res = await fetch(api);
-	const dataIndicador = await res.json();
-	return dataIndicador;
+	try {
+		const res = await fetch(api);
+		const dataIndicador = await res.json();
+		return dataIndicador;
+	} catch (e) {
+		console.error(e.message);
+	}
 }
 
 async function graphicConfig(coinsData) {
 	const typeGraphic = "line";
 	const tittle = "Valor historico";
 	const lineColor = "green";
-	const date = coinsData.serie.map((serie) => {
-		newDate = new Date(serie.fecha);
-		return newDate.toLocaleDateString("en-US");
-	});
 
-	const value = coinsData.serie.map((serie) => serie.valor);
+	try {
+		const date = coinsData.serie.map((serie) => {
+			newDate = new Date(serie.fecha);
+			return newDate.toLocaleDateString("en-US");
+		});
+		const value = coinsData.serie.map((serie) => serie.valor);
 
-	const config = {
-		type: typeGraphic,
-		data: {
-			labels: date,
-			datasets: [
-				{
-					label: tittle,
-					backgroundColor: lineColor,
-					data: value,
-				},
-			],
-		},
-	};
-	return config;
+		const config = {
+			type: typeGraphic,
+			data: {
+				labels: date,
+				datasets: [
+					{
+						label: tittle,
+						backgroundColor: lineColor,
+						data: value,
+					},
+				],
+			},
+		};
+		return config;
+	} catch (e) {
+		console.error(e.message);
+	}
 }
 
 async function renderGraphic(coinsData) {
 	const config = await graphicConfig(coinsData);
 	const ChartDOM = document.getElementById("myChart");
 
-	if (myChart) {
-		myChart.destroy();
+	try {
+		if (myChart) {
+			myChart.destroy();
+		}
+		myChart = new Chart(ChartDOM, config);
+	} catch (e) {
+		console.error(e.message);
 	}
-	myChart = new Chart(ChartDOM, config);
 }
 
 coinSelector.addEventListener("change", (e) => {
@@ -106,27 +121,31 @@ coinSelector.addEventListener("change", (e) => {
 	let coinsData;
 	const selectChange = e.target.value;
 
-	switch (selectChange) {
-		case "uf":
-			coinsData = getCoinsData(ufindicador);
-			break;
-		case "dolar":
-			coinsData = getCoinsData(dolarindicador);
-			break;
-		case "euro":
-			coinsData = getCoinsData(euroindicador);
-			break;
-		case "utm":
-			coinsData = getCoinsData(utmindicador);
-			break;
-		default:
-			console.log("Error no existe el tipo de cambio seleccionado");
+	try {
+		switch (selectChange) {
+			case "uf":
+				coinsData = getCoinsData(ufindicador);
+				break;
+			case "dolar":
+				coinsData = getCoinsData(dolarindicador);
+				break;
+			case "euro":
+				coinsData = getCoinsData(euroindicador);
+				break;
+			case "utm":
+				coinsData = getCoinsData(utmindicador);
+				break;
+			default:
+				alert("Error no existe el tipo de cambio seleccionado");
+		}
+		coinsData
+			.then(function (coinsData) {
+				renderGraphic(coinsData);
+			})
+			.catch(function (error) {
+				console.log("No pude obtener datos");
+			});
+	} catch (e) {
+		console.error(e.message);
 	}
-	coinsData
-		.then(function (coinsData) {
-			renderGraphic(coinsData);
-		})
-		.catch(function (error) {
-			console.log("No pude obtener datos");
-		});
 });
